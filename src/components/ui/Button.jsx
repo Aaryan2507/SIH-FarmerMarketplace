@@ -1,4 +1,4 @@
-import { forwardRef } from "react"
+import { forwardRef, cloneElement, isValidElement } from "react"
 import { Loader2 } from "lucide-react"
 import { cn } from "@/utils/cn"
 
@@ -21,25 +21,41 @@ const SIZES = {
 
 export const Button = forwardRef(
   (
-    { className, variant = "primary", size = "md", loading = false, disabled, children, type = "button", ...props },
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      loading = false,
+      isLoading = false,
+      asChild = false,
+      disabled,
+      children,
+      type = "button",
+      ...props
+    },
     ref,
   ) => {
+    const busy = loading || isLoading
+    const classes = cn(
+      "inline-flex items-center justify-center font-medium transition-colors duration-150 whitespace-nowrap",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+      "disabled:opacity-50 disabled:cursor-not-allowed",
+      VARIANTS[variant],
+      variant !== "link" && SIZES[size],
+      className,
+    )
+
+    if (asChild && isValidElement(children)) {
+      return cloneElement(children, {
+        ref,
+        className: cn(classes, children.props.className),
+        ...props,
+      })
+    }
+
     return (
-      <button
-        ref={ref}
-        type={type}
-        disabled={disabled || loading}
-        className={cn(
-          "inline-flex items-center justify-center font-medium transition-colors duration-150 whitespace-nowrap",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
-          VARIANTS[variant],
-          variant !== "link" && SIZES[size],
-          className,
-        )}
-        {...props}
-      >
-        {loading && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
+      <button ref={ref} type={type} disabled={disabled || busy} className={classes} {...props}>
+        {busy && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
         {children}
       </button>
     )
