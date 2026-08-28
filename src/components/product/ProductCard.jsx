@@ -10,6 +10,7 @@ export function ProductCard({ product }) {
   const cart = useCart()
   const isConsumer = role === "consumer"
   const outOfStock = product.stockStatus === "out-of-stock"
+  const productPath = isConsumer ? `/consumer/products/${product.id}` : `/${role || "consumer"}/marketplace/${product.id}`
 
   function handleAdd(e) {
     e.preventDefault()
@@ -20,7 +21,7 @@ export function ProductCard({ product }) {
 
   return (
     <Link
-      to={`/${role || "consumer"}/marketplace/${product.id}`}
+      to={productPath}
       className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-soft transition-shadow hover:shadow-md"
     >
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">

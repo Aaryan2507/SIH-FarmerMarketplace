@@ -14,8 +14,9 @@ export function CartProvider({ children }) {
     setItems((prev) => {
       const existing = prev.find((i) => i.productId === product.id)
       if (existing) {
+        const nextQuantity = Math.min(existing.quantity + quantity, product.quantity)
         return prev.map((i) =>
-          i.productId === product.id ? { ...i, quantity: i.quantity + quantity } : i,
+          i.productId === product.id ? { ...i, quantity: nextQuantity, maxQuantity: product.quantity } : i,
         )
       }
       return [
@@ -29,7 +30,7 @@ export function CartProvider({ children }) {
           farmerName: product.farmerName,
           farmerId: product.farmerId,
           maxQuantity: product.quantity,
-          quantity,
+          quantity: Math.min(quantity, product.quantity),
         },
       ]
     })
@@ -38,7 +39,11 @@ export function CartProvider({ children }) {
   const updateQuantity = useCallback((productId, quantity) => {
     setItems((prev) =>
       prev
-        .map((i) => (i.productId === productId ? { ...i, quantity: Math.max(1, quantity) } : i))
+        .map((i) =>
+          i.productId === productId
+            ? { ...i, quantity: Math.min(Math.max(1, quantity), i.maxQuantity ?? quantity) }
+            : i,
+        )
         .filter((i) => i.quantity > 0),
     )
   }, [])

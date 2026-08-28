@@ -28,21 +28,33 @@ export default function ConsumerCheckout() {
     setIsSubmitting(true)
     setError("")
     try {
-      const order = await orderService.createOrder({
-        buyerId: user.id,
-        buyerName: user.name,
-        buyerType: user.role,
-        farmerId: cart.items[0].farmerId,
-        farmerName: cart.items[0].farmerName,
-        items: cart.items,
-        subtotal: cart.subtotal,
-        deliveryFee: cart.deliveryFee,
-        total: cart.total,
-        paymentMethod,
-        address: address.trim(),
-      })
+      const itemsByFarmer = cart.items.reduce((groups, item) => {
+        const key = item.farmerId || "unknown"
+        groups[key] = groups[key] || []
+        groups[key].push(item)
+        return groups
+      }, {})
+      const orders = await Promise.all(
+        Object.values(itemsByFarmer).map((items) => {
+          const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+          const deliveryFee = subtotal > 500 ? 0 : 30
+          return orderService.createOrder({
+            buyerId: user.id,
+            buyerName: user.name,
+            buyerType: user.role,
+            farmerId: items[0].farmerId,
+            farmerName: items[0].farmerName,
+            items,
+            subtotal,
+            deliveryFee,
+            total: subtotal + deliveryFee,
+            paymentMethod,
+            address: address.trim(),
+          })
+        }),
+      )
       cart.clearCart()
-      navigate(`/consumer/orders/${order.id}/confirmation`, { state: { order } })
+      navigate(`/consumer/orders/${orders[0].id}/confirmation`, { state: { orders } })
     } catch (err) {
       setError(err.message || "Unable to place order")
     } finally {
