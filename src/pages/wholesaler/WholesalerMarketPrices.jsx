@@ -1,0 +1,5 @@
+import { Card, CardContent } from "../../components/ui/Card"
+import { mockMarketPrices } from "../../data/mockMarketPrices"
+import { formatCurrency } from "../../utils/format"
+
+export default function WholesalerMarketPrices() { return <div className="mx-auto max-w-6xl px-4 py-6 lg:px-8"><h1 className="font-heading text-2xl font-semibold text-foreground">Market prices</h1><p className="mt-1 text-sm text-muted-foreground">Reference mandi rates when planning your procurement.</p><div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{mockMarketPrices.map((price) => <Card key={price.productId}><CardContent><h2 className="font-heading font-semibold text-foreground">{price.productName}</h2><p className="mt-1 text-xs text-muted-foreground">{price.market}</p><p className="mt-4 font-heading text-xl font-semibold text-primary">{formatCurrency(price.marketPrice)}<span className="text-sm font-normal text-muted-foreground"> / unit</span></p></CardContent></Card>)}</div></div> }
