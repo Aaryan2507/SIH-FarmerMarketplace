@@ -90,6 +90,8 @@ export default function App() {
               <Route path="/wholesaler" element={<AppLayout />}>
                 <Route index element={<WholesalerDashboard />} />
                 <Route path="marketplace" element={<WholesalerMarketplace />} />
+                <Route path="bulk-orders" element={<WholesalerBulkOrder />} />
+                <Route path="marketplace/:productId" element={<WholesalerBulkOrder />} />
                 <Route path="marketplace/:productId/bulk-order" element={<WholesalerBulkOrder />} />
                 <Route path="orders" element={<WholesalerOrders />} />
                 <Route path="orders/:orderId" element={<WholesalerOrderDetail />} />

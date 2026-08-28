@@ -38,7 +38,7 @@ export default function ConsumerCart() {
               key={item.productId}
               className="flex gap-3 rounded-xl border border-border bg-card p-3 shadow-soft sm:gap-4 sm:p-4"
             >
-              <Link to={`/consumer/marketplace/${item.productId}`} className="shrink-0">
+              <Link to={`/consumer/products/${item.productId}`} className="shrink-0">
                 <img
                   src={item.image || "/placeholder.svg"}
                   alt={item.name}
@@ -49,7 +49,7 @@ export default function ConsumerCart() {
               <div className="flex flex-1 flex-col justify-between">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <Link to={`/consumer/marketplace/${item.productId}`}>
+                    <Link to={`/consumer/products/${item.productId}`}>
                       <h3 className="font-heading text-sm font-semibold text-foreground hover:text-primary sm:text-base">
                         {item.name}
                       </h3>
