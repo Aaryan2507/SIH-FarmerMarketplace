@@ -1,0 +1,331 @@
+/* ============================================================
+   KISAAN DIRECT — design tokens
+   A farm-marketplace identity: field green + harvest gold for
+   the customer/shop side, clay/terracotta for the seller side,
+   on a warm husk-cream base. Ticket-stub cards + furrow-line
+   texture are the signature motifs (nod to farm-stand signage
+   and produce crates).
+   ============================================================ */
+
+:root {
+  /* --- Color --- */
+  --color-bg: #f6f2e7;
+  --color-bg-soft: #efe8d6;
+  --color-surface: #fffdf8;
+  --color-ink: #20301f;
+  --color-ink-soft: #4b5a44;
+  --color-green: #26402c;
+  --color-green-soft: #3f5d40;
+  --color-gold: #d98e2b;
+  --color-gold-soft: #f2c877;
+  --color-clay: #a6512e;
+  --color-clay-soft: #c97a4e;
+  --color-line: #d9cfb4;
+  --color-danger: #a3372a;
+
+  /* --- Type --- */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* --- Layout --- */
+  --radius: 10px;
+  --radius-lg: 18px;
+  --shadow-card: 0 1px 2px rgba(32, 48, 31, 0.06), 0 6px 20px rgba(32, 48, 31, 0.08);
+  --shadow-pop: 0 10px 30px rgba(32, 48, 31, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0 0 0.4em;
+  letter-spacing: -0.01em;
+  color: var(--color-green);
+}
+
+p {
+  margin: 0 0 1em;
+  line-height: 1.55;
+  color: var(--color-ink-soft);
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* --- Layout shell --- */
+.page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.main {
+  flex: 1;
+  padding: 32px 0 64px;
+}
+
+/* --- Furrow texture: sparing decorative use only --- */
+.furrows {
+  background-image: repeating-linear-gradient(
+    180deg,
+    rgba(38, 64, 44, 0.05) 0px,
+    rgba(38, 64, 44, 0.05) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn-primary {
+  background: var(--color-green);
+  color: var(--color-bg);
+}
+.btn-primary:hover {
+  box-shadow: var(--shadow-pop);
+}
+
+.btn-gold {
+  background: var(--color-gold);
+  color: #2a1a02;
+}
+.btn-gold:hover {
+  box-shadow: 0 8px 22px rgba(217, 142, 43, 0.35);
+}
+
+.btn-clay {
+  background: var(--color-clay);
+  color: #fff6ee;
+}
+.btn-clay:hover {
+  box-shadow: 0 8px 22px rgba(166, 81, 46, 0.35);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1.5px solid var(--color-line);
+  color: var(--color-ink);
+}
+.btn-ghost:hover {
+  border-color: var(--color-ink-soft);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* --- Form fields --- */
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  color: var(--color-ink);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--color-green-soft);
+  outline-offset: 1px;
+}
+
+/* --- Card / surface --- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 22px;
+}
+
+/* --- Ticket-stub product card: the signature motif --- */
+.ticket {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket-perf {
+  height: 0;
+  border-top: 2px dashed var(--color-line);
+  margin: 0 14px;
+  position: relative;
+}
+
+.ticket-perf::before,
+.ticket-perf::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-bg);
+}
+.ticket-perf::before {
+  left: -22px;
+}
+.ticket-perf::after {
+  right: -22px;
+}
+
+/* --- Status pill --- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.pill-ok {
+  background: rgba(63, 93, 64, 0.12);
+  color: var(--color-green-soft);
+}
+.pill-low {
+  background: rgba(217, 142, 43, 0.16);
+  color: #8a5a12;
+}
+.pill-out {
+  background: rgba(163, 55, 42, 0.12);
+  color: var(--color-danger);
+}
+
+/* --- Utility --- */
+.row {
+  display: flex;
+  align-items: center;
+}
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.grid {
+  display: grid;
+  gap: 20px;
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.eyebrow {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-clay);
+}
+.muted {
+  color: var(--color-ink-soft);
+  font-size: 0.9rem;
+}
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--color-green);
+}
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 720px) {
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
